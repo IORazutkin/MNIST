@@ -36,7 +36,7 @@ x_test /= 255
 
 model = tf.keras.models.load_model('models/simple')
 
-
+print(x_train)
 model.evaluate(x_test, y_test)
 
 # image_index = 4444
