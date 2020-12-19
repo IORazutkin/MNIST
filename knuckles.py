@@ -11,7 +11,7 @@ from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D
 from sklearn.metrics import confusion_matrix
 
 def get_data(model, image_dir):
-    image_size = 160
+    image_size = 28
     list = os.listdir(image_dir)
     test = []
     true = []
@@ -29,12 +29,12 @@ def get_data(model, image_dir):
 
     test = np.asarray(test)
     test = 1 - test / 255.0
-    test = test.reshape((len(test), 160, 160, 1))
+    test = test.reshape((len(test), 28, 28, 1))
     true = np.asarray(true)
     return test, true
 
 # model = Sequential([
-#     Conv2D(32, kernel_size=(3, 3), input_shape=(160, 160, 1)),
+#     Conv2D(32, kernel_size=(3, 3), input_shape=(28, 28, 1)),
 #     MaxPooling2D(pool_size=(2, 2)),
 #     Flatten(),
 #     Dense(128, activation='relu'),
@@ -44,18 +44,18 @@ def get_data(model, image_dir):
 # model.compile(optimizer='adam',
 #               loss='sparse_categorical_crossentropy',
 #               metrics=['accuracy'])
-#
-# model.fit(x=x_train, y=y_train, epochs=10)
-# model.save('models/knuckles')
 
 model = tf.keras.models.load_model('models/knuckles')
 x_train, y_train = get_data(model, 'C:/Users/igorr/PycharmProjects/AI/train_knuckles_dataset')
-x_test, y_test = get_data(model, 'C:/Users/igorr/PycharmProjects/AI/train_knuckles_dataset')
+# model.fit(x=x_train, y=y_train, epochs=20)
+# model.save('models/knuckles')
+
+x_test, y_test = get_data(model, 'C:/Users/igorr/PycharmProjects/AI/my_knuckles_dataset')
+
+model.evaluate(x=x_test, y=y_test)
 
 predict = model.predict_classes(x_test)
-
-# result = model.predict_classes(x_test)
-# print(result)
+# print(predict)
 
 # image_index = 800
 # plt.imshow(x_train[image_index].reshape(160, 160), cmap='Greys')
@@ -64,7 +64,6 @@ predict = model.predict_classes(x_test)
 # plt.show()
 
 con_mat = tf.math.confusion_matrix(labels=y_test, predictions=predict).numpy()
-
 con_mat_norm = np.around(con_mat.astype('float') / con_mat.sum(axis=1)[:, np.newaxis], decimals=2)
 
 classes=[0, 1, 2, 3]
