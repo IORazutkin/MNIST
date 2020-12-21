@@ -50,7 +50,7 @@ x_train, y_train = get_data(model, 'C:/Users/igorr/PycharmProjects/AI/train_knuc
 # model.fit(x=x_train, y=y_train, epochs=20)
 # model.save('models/knuckles')
 
-x_test, y_test = get_data(model, 'C:/Users/igorr/PycharmProjects/AI/my_knuckles_dataset')
+x_test, y_test = get_data(model, 'C:/Users/igorr/PycharmProjects/AI/test_knuckles_dataset')
 
 model.evaluate(x=x_test, y=y_test)
 
